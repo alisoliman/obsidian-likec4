@@ -2,6 +2,9 @@
   border: 1px solid var(--background-modifier-border);
   border-radius: 6px;
   overflow: hidden;
+  width: 100%;
+  height: var(--likec4-height, 400px);
+  position: relative;
 }
 
 .likec4-loading {

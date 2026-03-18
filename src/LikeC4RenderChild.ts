@@ -21,10 +21,13 @@ export class LikeC4RenderChild extends MarkdownRenderChild {
     this.settings = settings;
   }
 
-  async onload() {
+  onload() {
     this.mounted = true;
     this.showLoading();
+    void this.loadDiagram();
+  }
 
+  private async loadDiagram() {
     try {
       await renderDiagram(
         this.containerEl,

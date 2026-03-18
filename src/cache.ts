@@ -1,8 +1,9 @@
 import type { LikeC4Model } from "@likec4/core/model";
+import type { LayoutedView } from "@likec4/core/types";
 
 interface CacheEntry {
-  model: LikeC4Model<any>;
-  diagrams: any[];
+  model: LikeC4Model;
+  diagrams: LayoutedView[];
   source: string;
   accessedAt: number;
 }
@@ -26,7 +27,7 @@ class ModelCache {
     return undefined;
   }
 
-  set(source: string, model: LikeC4Model<any>, diagrams: any[]) {
+  set(source: string, model: LikeC4Model, diagrams: LayoutedView[]) {
     const key = this.keyFor(source);
     this.cache.set(key, { model, diagrams, source, accessedAt: Date.now() });
     this.evict();

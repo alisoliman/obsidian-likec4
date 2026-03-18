@@ -5,6 +5,7 @@ import { modelCache } from "./cache";
 
 import { fromSource } from "@likec4/language-services/browser";
 import { LikeC4ModelProvider, LikeC4View } from "@likec4/diagram";
+import type { LayoutedView } from "@likec4/core/types";
 
 const roots = new WeakMap<HTMLElement, Root>();
 
@@ -27,7 +28,7 @@ export async function renderDiagram(
   modelCache.setMaxSize(settings.cacheSize);
 
   let layoutedModel;
-  let diagrams;
+  let diagrams: LayoutedView[];
 
   // Check cache first
   const cached = modelCache.get(dslSource);
@@ -48,17 +49,16 @@ export async function renderDiagram(
     );
   }
 
-  let targetViewId = viewId;
-  if (!targetViewId) {
-    targetViewId = diagrams[0]!.id;
-  } else {
-    const exists = diagrams.some((d) => d.id === targetViewId);
-    if (!exists) {
-      const available = diagrams.map((d) => d.id).join(", ");
-      throw new Error(
-        `View "${targetViewId}" not found. Available views: ${available}`,
-      );
-    }
+  // Find the target diagram by id, or use the first one
+  const targetDiagram = viewId
+    ? diagrams.find((d) => d.id === viewId)
+    : diagrams[0];
+
+  if (!targetDiagram) {
+    const available = diagrams.map((d) => d.id).join(", ");
+    throw new Error(
+      `View "${viewId}" not found. Available views: ${available}`,
+    );
   }
 
   const colorScheme = getColorScheme(settings.colorScheme);
@@ -74,7 +74,7 @@ export async function renderDiagram(
       LikeC4ModelProvider,
       { likec4model: layoutedModel },
       React.createElement(LikeC4View, {
-        viewId: targetViewId as any,
+        viewId: targetDiagram.id,
         browser: settings.showBrowser,
         colorScheme,
         keepAspectRatio: false,

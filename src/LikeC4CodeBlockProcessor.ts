@@ -47,11 +47,11 @@ export class LikeC4CodeBlockProcessor {
     this.plugin = plugin;
   }
 
-  async process(
+  process(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
-  ): Promise<void> {
+  ): void {
     const { options, remainingSource, hasOptions } = parseOptions(source);
 
     const dslSource = hasOptions ? remainingSource : source;
@@ -65,9 +65,7 @@ export class LikeC4CodeBlockProcessor {
     const viewId = options.viewId;
 
     const container = el.createDiv({ cls: "likec4-diagram-container" });
-    container.style.height = `${height}px`;
-    container.style.width = "100%";
-    container.style.position = "relative";
+    container.setCssProps({ "--likec4-height": `${height}px` });
 
     const child = new LikeC4RenderChild(
       container,
