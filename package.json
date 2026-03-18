@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node esbuild.config.mjs --watch",
-    "build": "node esbuild.config.mjs --production"
+    "build": "node esbuild.config.mjs --production",
+    "deploy": "node esbuild.config.mjs --production && cp main.js manifest.json styles.css \"$OBSIDIAN_VAULT/.obsidian/plugins/obsidian-likec4/\""
   },
   "dependencies": {
     "@likec4/core": "^1.52.0",
