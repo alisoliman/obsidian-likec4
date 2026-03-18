@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-likec4",
+  "name": "LikeC4 Diagrams",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Render LikeC4 architecture diagrams inline within your notes. Write architecture-as-code in fenced code blocks and see interactive diagrams in Reading view.",
+  "author": "Ali",
+  "isDesktopOnly": true
+}

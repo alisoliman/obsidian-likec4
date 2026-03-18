@@ -1,0 +1,25 @@
+# Build output
+main.js
+*.js.map
+
+# Dependencies
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# npm
+npm-debug.log*
+
+# Build artifacts
+dist/
+*.tgz
