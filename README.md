@@ -55,16 +55,16 @@ views {
 
 ### Manual
 
-1. Download `main.js` and `manifest.json` from the [latest release](https://github.com/your-username/obsidian-likec4/releases)
-2. Create a folder `obsidian-likec4` in your vault's `.obsidian/plugins/` directory
-3. Copy `main.js` and `manifest.json` into that folder
-4. Restart Obsidian and enable the plugin in Settings → Community Plugins
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/alisoliman/obsidian-likec4/releases)
+2. Create a folder `likec4` in your vault's `.obsidian/plugins/` directory
+3. Copy the downloaded files into that folder
+4. Restart Obsidian and enable the plugin in Settings → Community plugins
 
 ### BRAT
 
 1. Install the [BRAT plugin](https://github.com/TfTHacker/obsidian42-brat)
 2. Add this repository URL in BRAT settings
-3. Enable "LikeC4 Diagrams" in Community Plugins
+3. Enable "LikeC4 Diagrams" in Community plugins
 
 ## Features
 
@@ -129,8 +129,8 @@ views {
 
 ## Credits
 
-- [LikeC4](https://likec4.dev) — Architecture as Code toolchain by Denis Davydkov
-- Built with `@likec4/language-services`, `@likec4/diagram`, and `@likec4/core`
+- [LikeC4](https://likec4.dev) — Architecture as Code toolchain by Denis Davydkov (MIT license)
+- Built with [`@likec4/language-services`](https://www.npmjs.com/package/@likec4/language-services), [`@likec4/diagram`](https://www.npmjs.com/package/@likec4/diagram), and [`@likec4/core`](https://www.npmjs.com/package/@likec4/core)
 
 ## License
 
