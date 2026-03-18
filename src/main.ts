@@ -1,6 +1,7 @@
 import { Plugin } from "obsidian";
 import { LikeC4CodeBlockProcessor } from "./LikeC4CodeBlockProcessor";
-import { DEFAULT_SETTINGS, type LikeC4PluginSettings } from "./settings";
+import { DEFAULT_SETTINGS, LikeC4SettingTab, type LikeC4PluginSettings } from "./settings";
+import { modelCache } from "./cache";
 
 export default class LikeC4Plugin extends Plugin {
   settings: LikeC4PluginSettings = DEFAULT_SETTINGS;
@@ -8,6 +9,8 @@ export default class LikeC4Plugin extends Plugin {
 
   async onload() {
     await this.loadSettings();
+
+    this.addSettingTab(new LikeC4SettingTab(this.app, this));
 
     this.processor = new LikeC4CodeBlockProcessor(this);
 
@@ -20,6 +23,7 @@ export default class LikeC4Plugin extends Plugin {
   onunload() {
     this.processor?.dispose();
     this.processor = null;
+    modelCache.clear();
   }
 
   async loadSettings() {

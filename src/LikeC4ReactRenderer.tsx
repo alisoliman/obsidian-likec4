@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot, type Root } from "react-dom/client";
 import type { LikeC4PluginSettings } from "./settings";
+import { modelCache } from "./cache";
 
 import { fromSource } from "@likec4/language-services/browser";
 import { LikeC4ModelProvider, LikeC4View } from "@likec4/diagram";
@@ -23,12 +24,25 @@ export async function renderDiagram(
   viewId: string | undefined,
   settings: LikeC4PluginSettings,
 ): Promise<void> {
-  const likec4 = await fromSource(dslSource);
-  const layoutedModel = await likec4.layoutedModel();
-  const diagrams = await likec4.diagrams();
+  modelCache.setMaxSize(settings.cacheSize);
+
+  let layoutedModel;
+  let diagrams;
+
+  // Check cache first
+  const cached = modelCache.get(dslSource);
+  if (cached) {
+    layoutedModel = cached.model;
+    diagrams = cached.diagrams;
+  } else {
+    const likec4 = await fromSource(dslSource);
+    layoutedModel = await likec4.layoutedModel();
+    diagrams = await likec4.diagrams();
+    modelCache.set(dslSource, layoutedModel, diagrams);
+    await likec4.dispose();
+  }
 
   if (diagrams.length === 0) {
-    await likec4.dispose();
     throw new Error(
       'No views found in the LikeC4 model. Define views using:\nviews {\n  view index {\n    include *\n  }\n}',
     );
@@ -41,7 +55,6 @@ export async function renderDiagram(
     const exists = diagrams.some((d) => d.id === targetViewId);
     if (!exists) {
       const available = diagrams.map((d) => d.id).join(", ");
-      await likec4.dispose();
       throw new Error(
         `View "${targetViewId}" not found. Available views: ${available}`,
       );
@@ -75,8 +88,6 @@ export async function renderDiagram(
       }),
     ),
   );
-
-  await likec4.dispose();
 }
 
 export function unmountDiagram(container: HTMLElement): void {

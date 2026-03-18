@@ -81,14 +81,7 @@ export class LikeC4CodeBlockProcessor {
   }
 
   private renderError(el: HTMLElement, message: string) {
-    const errorEl = el.createDiv({ cls: "likec4-error" });
-    errorEl.style.padding = "16px";
-    errorEl.style.color = "var(--text-error)";
-    errorEl.style.backgroundColor = "var(--background-modifier-error)";
-    errorEl.style.borderRadius = "4px";
-    errorEl.style.fontFamily = "var(--font-monospace)";
-    errorEl.style.fontSize = "0.85em";
-    errorEl.setText(message);
+    el.createDiv({ cls: "likec4-error", text: message });
   }
 
   dispose() {

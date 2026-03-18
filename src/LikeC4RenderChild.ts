@@ -53,29 +53,19 @@ export class LikeC4RenderChild extends MarkdownRenderChild {
   }
 
   private showLoading() {
-    const loader = this.containerEl.createDiv({ cls: "likec4-loading" });
-    loader.style.display = "flex";
-    loader.style.alignItems = "center";
-    loader.style.justifyContent = "center";
-    loader.style.height = "100%";
-    loader.style.color = "var(--text-muted)";
-    loader.style.fontSize = "0.9em";
-    loader.setText("Loading LikeC4 diagram…");
+    this.containerEl.createDiv({
+      cls: "likec4-loading",
+      text: "Loading LikeC4 diagram…",
+    });
   }
 
   private showError(err: unknown) {
     this.containerEl.empty();
-    const errorEl = this.containerEl.createDiv({ cls: "likec4-error" });
-    errorEl.style.padding = "16px";
-    errorEl.style.color = "var(--text-error)";
-    errorEl.style.backgroundColor = "var(--background-modifier-error)";
-    errorEl.style.borderRadius = "4px";
-    errorEl.style.fontFamily = "var(--font-monospace)";
-    errorEl.style.fontSize = "0.85em";
-    errorEl.style.whiteSpace = "pre-wrap";
-
     const message =
       err instanceof Error ? err.message : "Unknown error rendering diagram";
-    errorEl.setText(`LikeC4 Error: ${message}`);
+    this.containerEl.createDiv({
+      cls: "likec4-error",
+      text: `LikeC4 Error: ${message}`,
+    });
   }
 }
